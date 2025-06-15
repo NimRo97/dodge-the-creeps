@@ -34,4 +34,3 @@
 *.zip filter=lfs diff=lfs merge=lfs -text
 # Force .gdignore to be tracked by Git only (not LFS)
 *.gdignore text eol=lf -filter -diff -merge
-* !text !filter !merge !diff
