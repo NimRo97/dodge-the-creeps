@@ -31,7 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.0196078, 0.203922, 0.219608, 1)
+color = Color(0.040304, 0.29589, 0.317162, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_lquwl")]
 
