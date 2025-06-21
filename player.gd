@@ -20,23 +20,22 @@ func _process(delta: float) -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-
+	
 	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		$AnimatedSprite2D.play()
+		move(velocity, delta)
 	else:
-		$AnimatedSprite2D.stop()
-		
+		$AnimatedSprite2D.animation = "walk"
+		rotation = 0
+
+	if velocity.x != 0:
+		$AnimatedSprite2D.flip_h = velocity.x < 0
+
+func move(velocity: Vector2, delta: float) -> void:
+	$AnimatedSprite2D.animation = "up"
+	velocity = velocity.normalized() * speed
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
-	
-	if velocity.x != 0:
-		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.flip_v = false
-		$AnimatedSprite2D.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$AnimatedSprite2D.animation = "up"
-		$AnimatedSprite2D.flip_v = velocity.y > 0
+	rotation = velocity.angle() + PI / 2
 
 func _on_body_entered(_body: Node2D) -> void:
 	hide()
@@ -46,4 +45,6 @@ func _on_body_entered(_body: Node2D) -> void:
 func start(pos: Vector2) -> void:
 	position = pos
 	show()
-	$CollisionShape2D.disabled = false
+	$CollisionShape2D.set_deferred("disabled", false)
+	$AnimatedSprite2D.animation = "walk"
+	$AnimatedSprite2D.play()
